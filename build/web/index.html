@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Horticulture Department – Home</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+
+        /* ── HEADER ── */
+        header {
+            background: #2e7d32;
+            color: white;
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo span { font-size: 28px; }
+        .logo h1 { font-size: 20px; font-weight: bold; line-height: 1.2; }
+        .logo small { font-size: 11px; color: #a5d6a7; font-weight: normal; display: block; }
+        nav { display: flex; gap: 6px; flex-wrap: wrap; }
+        nav a {
+            color: #c8e6c9;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            transition: all .2s;
+        }
+        nav a:hover { background: rgba(255,255,255,0.15); color: white; }
+        nav a.active { background: white; color: #2e7d32; font-weight: bold; }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #43a047 100%);
+            color: white;
+            padding: 100px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "🌿";
+            font-size: 300px;
+            position: absolute;
+            right: -40px;
+            top: -40px;
+            opacity: 0.06;
+            line-height: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #c8e6c9;
+            font-size: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .hero h2 { font-size: 42px; line-height: 1.2; margin-bottom: 18px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .hero p  { font-size: 16px; color: #c8e6c9; max-width: 580px; margin: 0 auto 36px; line-height: 1.8; }
+        .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-white {
+            padding: 14px 32px;
+            background: white;
+            color: #2e7d32;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all .2s;
+        }
+        .btn-white:hover { background: #e8f5e9; transform: translateY(-1px); }
+        .btn-outline {
+            padding: 14px 32px;
+            border: 2px solid rgba(255,255,255,0.6);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all .2s;
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-1px); }
+
+        /* ── STATS BAR ── */
+        .stats-bar {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+        .stat {
+            padding: 24px 40px;
+            text-align: center;
+            border-right: 1px solid #f0f0f0;
+        }
+        .stat:last-child { border-right: none; }
+        .stat-number { font-size: 28px; font-weight: bold; color: #2e7d32; display: block; }
+        .stat-label  { font-size: 12px; color: #888; margin-top: 4px; }
+
+        /* ── SECTION WRAPPER ── */
+        .section { max-width: 1060px; margin: 60px auto; padding: 0 24px; }
+        .section-head { margin-bottom: 32px; }
+        .section-head h2 { font-size: 26px; color: #1b5e20; margin-bottom: 6px; }
+        .section-head p  { font-size: 14px; color: #888; }
+
+        /* ── CATEGORY CARDS ── */
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 20px;
+        }
+        .cat-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: transform .2s, box-shadow .2s;
+            display: block;
+        }
+        .cat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .cat-thumb {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+        }
+        .cat-ornamental { background: #fce4ec; }
+        .cat-fruit      { background: #fff8e1; }
+        .cat-vegetable  { background: #e8f5e9; }
+        .cat-seedling   { background: #e3f2fd; }
+        .cat-body { padding: 16px 18px; }
+        .cat-body h3 { font-size: 15px; color: #1b5e20; margin-bottom: 6px; }
+        .cat-body p  { font-size: 13px; color: #777; line-height: 1.5; }
+        .cat-link { display: inline-block; margin-top: 12px; font-size: 12px; color: #2e7d32; font-weight: bold; }
+
+        /* ── FEATURED PRODUCTS ── */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .product-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+        .product-badge {
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+            border-radius: 4px;
+            padding: 3px 8px;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+        .product-card h3 { font-size: 16px; color: #1b5e20; margin-bottom: 8px; }
+        .product-card p  { font-size: 13px; color: #777; line-height: 1.6; flex: 1; margin-bottom: 18px; }
+        .btn-green-sm {
+            padding: 9px 18px;
+            background: #2e7d32;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            text-align: center;
+            transition: background .2s;
+        }
+        .btn-green-sm:hover { background: #1b5e20; }
+
+        /* ── HOW IT WORKS ── */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 20px;
+        }
+        .step-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            padding: 26px 22px;
+        }
+        .step-num {
+            width: 40px; height: 40px;
+            background: #2e7d32;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 14px;
+        }
+        .step-card h3 { font-size: 15px; color: #1b5e20; margin-bottom: 8px; }
+        .step-card p  { font-size: 13px; color: #777; line-height: 1.6; }
+
+        /* ── CTA BANNER ── */
+        .cta-banner {
+            background: linear-gradient(135deg, #1b5e20, #388e3c);
+            color: white;
+            border-radius: 12px;
+            padding: 52px 40px;
+            text-align: center;
+            max-width: 1060px;
+            margin: 0 auto 60px;
+        }
+        .cta-banner h2 { font-size: 26px; margin-bottom: 10px; }
+        .cta-banner p  { font-size: 14px; color: #c8e6c9; margin-bottom: 28px; line-height: 1.7; }
+
+        /* ── INFO STRIP ── */
+        .info-strip {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0;
+            margin: 60px 0;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 24px 36px;
+            border-right: 1px solid #f0f0f0;
+        }
+        .info-item:last-child { border-right: none; }
+        .info-item-icon { font-size: 28px; }
+        .info-item-title { font-size: 14px; font-weight: bold; color: #1b5e20; margin-bottom: 3px; }
+        .info-item-sub   { font-size: 12px; color: #888; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #1b5e20;
+            color: #a5d6a7;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 640px) { footer { grid-template-columns: 1fr; } }
+        .footer-brand h3 { color: white; font-size: 16px; margin-bottom: 8px; }
+        .footer-brand p  { font-size: 13px; line-height: 1.7; color: #81c784; }
+        .footer-col h4 { color: white; font-size: 13px; margin-bottom: 12px; }
+        .footer-col a  {
+            display: block;
+            color: #81c784;
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        .footer-col a:hover { color: white; }
+        .footer-bottom {
+            background: #145214;
+            color: #66bb6a;
+            text-align: center;
+            padding: 14px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     HEADER
+══════════════════════════════════ -->
+<header>
+    <div class="logo">
+        <span>🌿</span>
+        <h1>Horticulture Department
+            <small>Ministry of Agriculture</small>
+        </h1>
+    </div>
+    <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="catalog.jsp">Catalog</a>
+        <a href="order-form.jsp">Order Request</a>
+        <a href="contact.jsp">Contact</a>
+    </nav>
+</header>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<div class="hero">
+    <div class="hero-badge">🌱 Horticulture Department Portal</div>
+    <h2>Grow More with Quality Horticultural Products</h2>
+    <p>
+        Browse our catalog of certified plants, seedlings, fruits, and vegetables.
+        Submit your order request directly with the department and we'll get back to you promptly.
+    </p>
+    <div class="hero-btns">
+        <a href="catalog.jsp" class="btn-white">Browse Our Catalog</a>
+        <a href="order-form.jsp" class="btn-outline">Place an Order Request</a>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     STATS BAR
+══════════════════════════════════ -->
+<div class="stats-bar">
+    <div class="stat">
+        <span class="stat-number">200+</span>
+        <div class="stat-label">Products Available</div>
+    </div>
+    <div class="stat">
+        <span class="stat-number">4</span>
+        <div class="stat-label">Product Categories</div>
+    </div>
+    <div class="stat">
+        <span class="stat-number">500+</span>
+        <div class="stat-label">Orders Processed</div>
+    </div>
+    <div class="stat">
+        <span class="stat-number">15+</span>
+        <div class="stat-label">Years of Service</div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BROWSE BY CATEGORY
+══════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <h2>Browse by Category</h2>
+        <p>Explore our full range of horticultural products by category</p>
+    </div>
+    <div class="cat-grid">
+        <a href="catalog.jsp" class="cat-card">
+            <div class="cat-thumb cat-ornamental">🌹</div>
+            <div class="cat-body">
+                <h3>Ornamental Plants</h3>
+                <p>Roses, shrubs, and flowering plants to beautify any space.</p>
+                <span class="cat-link">View products →</span>
+            </div>
+        </a>
+        <a href="catalog.jsp" class="cat-card">
+            <div class="cat-thumb cat-fruit">🍋</div>
+            <div class="cat-body">
+                <h3>Fruit Plants</h3>
+                <p>Grafted and certified varieties for reliable fruit production.</p>
+                <span class="cat-link">View products →</span>
+            </div>
+        </a>
+        <a href="catalog.jsp" class="cat-card">
+            <div class="cat-thumb cat-vegetable">🥦</div>
+            <div class="cat-body">
+                <h3>Vegetables</h3>
+                <p>High-yield seeds and seedlings for home and commercial farms.</p>
+                <span class="cat-link">View products →</span>
+            </div>
+        </a>
+        <a href="catalog.jsp" class="cat-card">
+            <div class="cat-thumb cat-seedling">🌳</div>
+            <div class="cat-body">
+                <h3>Tree Seedlings</h3>
+                <p>Indigenous and exotic tree seedlings for shade and reforestation.</p>
+                <span class="cat-link">View products →</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     FEATURED PRODUCTS
+══════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <h2>Featured Products</h2>
+        <p>A selection of our most popular horticultural items</p>
+    </div>
+    <div class="product-grid">
+        <div class="product-card">
+            <span class="product-badge">Ornamental</span>
+            <h3>Rose Seedling</h3>
+            <p>Red hybrid tea rose variety. Ideal for garden beds, borders, and decorative pots.</p>
+            <a href="catalog.jsp" class="btn-green-sm">View in Catalog</a>
+        </div>
+        <div class="product-card">
+            <span class="product-badge">Fruit</span>
+            <h3>Mango Sapling</h3>
+            <p>Grafted apple mango variety with high disease resistance and reliable yields.</p>
+            <a href="catalog.jsp" class="btn-green-sm">View in Catalog</a>
+        </div>
+        <div class="product-card">
+            <span class="product-badge">Vegetable</span>
+            <h3>Spinach Seeds</h3>
+            <p>Fast-growing spinach variety. Ready to harvest in as little as 40 days.</p>
+            <a href="catalog.jsp" class="btn-green-sm">View in Catalog</a>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     INFO STRIP
+══════════════════════════════════ -->
+<div class="info-strip">
+    <div class="info-item">
+        <div class="info-item-icon">✅</div>
+        <div>
+            <div class="info-item-title">Certified Quality</div>
+            <div class="info-item-sub">All products inspected and certified</div>
+        </div>
+    </div>
+    <div class="info-item">
+        <div class="info-item-icon">📦</div>
+        <div>
+            <div class="info-item-title">Easy Ordering</div>
+            <div class="info-item-sub">Submit your request online in minutes</div>
+        </div>
+    </div>
+    <div class="info-item">
+        <div class="info-item-icon">📞</div>
+        <div>
+            <div class="info-item-title">Expert Support</div>
+            <div class="info-item-sub">Our team is ready to assist you</div>
+        </div>
+    </div>
+    <div class="info-item">
+        <div class="info-item-icon">🚀</div>
+        <div>
+            <div class="info-item-title">Fast Processing</div>
+            <div class="info-item-sub">Orders reviewed within 24 hours</div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════ -->
+<div class="section">
+    <div class="section-head">
+        <h2>How It Works</h2>
+        <p>Four simple steps from browsing to collecting your order</p>
+    </div>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-num">1</div>
+            <h3>Browse the Catalog</h3>
+            <p>Explore all available products. Click any item to view its full details and description.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">2</div>
+            <h3>Fill the Order Form</h3>
+            <p>Enter your User ID and the Product ID you wish to request. Submit the form.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">3</div>
+            <h3>Receive Confirmation</h3>
+            <p>You'll get an order reference number instantly. The department reviews your request within 24 hours.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">4</div>
+            <h3>Collect Your Order</h3>
+            <p>Visit the department at the agreed time to pick up your products.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     CTA BANNER
+══════════════════════════════════ -->
+<div class="section" style="margin-bottom: 0;">
+    <div class="cta-banner">
+        <h2>Ready to Place Your Order?</h2>
+        <p>
+            Browse the full product catalog and submit your request directly to the
+            Horticulture Department. Our team will follow up with you shortly.
+        </p>
+        <div class="hero-btns">
+            <a href="catalog.jsp"     class="btn-white">View Full Catalog</a>
+            <a href="order-form.jsp"  class="btn-outline">Order Now</a>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+    <div class="footer-brand">
+        <h3>🌿 Horticulture Department</h3>
+        <p>
+            Providing quality horticultural products and services to farmers,
+            gardeners, and institutions since 2009.
+        </p>
+    </div>
+    <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="catalog.jsp">Product Catalog</a>
+        <a href="order-form.jsp">Order Request</a>
+        <a href="contact.jsp">Contact Us</a>
+    </div>
+    <div class="footer-col">
+        <h4>Categories</h4>
+        <a href="catalog.jsp">Ornamental Plants</a>
+        <a href="catalog.jsp">Fruit Plants</a>
+        <a href="catalog.jsp">Vegetables</a>
+        <a href="catalog.jsp">Tree Seedlings</a>
+    </div>
+</footer>
+<div class="footer-bottom">
+    &copy; 2025 Horticulture Department. All rights reserved.
+</div>
+
+</body>
+</html>
